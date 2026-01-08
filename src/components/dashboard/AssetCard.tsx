@@ -1,7 +1,7 @@
 import Image from "next/image";
-import { Asset } from "@/lib/mock-data";
+import { Asset } from "@prisma/client";
 import { Button } from "@/components/ui/button";
-import { Heart } from "lucide-react";
+import { Heart, MoreHorizontal, Download } from "lucide-react";
 
 interface AssetCardProps {
   asset: Asset;
@@ -9,37 +9,60 @@ interface AssetCardProps {
 
 export function AssetCard({ asset }: AssetCardProps) {
   return (
-    <div className="group relative rounded-lg bg-zinc-900 overflow-hidden flex flex-col border border-zinc-800">
-      {/* 1. Image Area - Fixed Height via Style */}
-      <div className="relative w-full bg-zinc-800" style={{ height: "200px" }}>
+    <div className="group relative flex flex-col rounded-xl bg-zinc-900 border border-zinc-800 overflow-hidden hover:border-zinc-700 transition-colors">
+      {/* 1. IMAGE ROOM */}
+      <div className="relative h-48 w-full bg-zinc-800 overflow-hidden">
+        {/* Image: z-0 ensures it stays behind the overlay even when zooming */}
         <Image
           src={asset.url}
           alt={asset.title}
           width={400}
           height={300}
-          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
+          className="z-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
         />
 
-        {/* Hover Overlay */}
-        <div className="absolute inset-0 z-20 bg-black/60 opacity-0 transition-opacity duration-300 group-hover:opacity-100 flex flex-col justify-between p-2">
+        {/* Overlay: z-10 ensures it stays ON TOP of the zoomed image */}
+        <div className="absolute inset-0 z-10 bg-black/40 opacity-0 transition-opacity duration-300 group-hover:opacity-100 flex flex-col justify-between p-2">
           <div className="flex justify-end">
             <Button
               size="icon"
               variant="ghost"
-              className="h-8 w-8 text-white hover:bg-white/20"
+              className="h-8 w-8 rounded-full text-white hover:bg-white/20"
             >
-              <Heart className="h-4 w-4" />
+              <Heart className="h-5 w-5" />
+            </Button>
+          </div>
+          <div className="flex justify-end gap-1">
+            <Button
+              size="icon"
+              variant="ghost"
+              className="h-8 w-8 rounded-full text-white hover:bg-white/20"
+            >
+              <Download className="h-5 w-5" />
+            </Button>
+            <Button
+              size="icon"
+              variant="ghost"
+              className="h-8 w-8 rounded-full text-white hover:bg-white/20"
+            >
+              <MoreHorizontal className="h-5 w-5" />
             </Button>
           </div>
         </div>
       </div>
 
-      {/* 2. Footer */}
-      <div className="p-3">
-        <h3 className="font-medium text-sm text-white truncate">
+      {/* 2. TEXT ROOM */}
+      <div className="flex flex-col gap-1 p-3">
+        <h3
+          className="font-medium text-sm text-zinc-100 truncate"
+          title={asset.title}
+        >
           {asset.title}
         </h3>
-        <p className="text-xs text-zinc-500">{asset.size}</p>
+        <div className="flex items-center justify-between text-[11px] text-zinc-500 uppercase tracking-wider">
+          <span>{asset.type}</span>
+          <span>{asset.size}</span>
+        </div>
       </div>
     </div>
   );

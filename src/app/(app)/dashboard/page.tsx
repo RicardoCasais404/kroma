@@ -1,12 +1,19 @@
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import { MOCK_ASSETS } from "@/lib/mock-data";
 import { AssetCard } from "@/components/dashboard/AssetCard";
+import { db } from "@/lib/db"; // Import our database connection
 
-export default function DashboardPage() {
+// 1. Make the component async so we can fetch data
+export default async function DashboardPage() {
+  // 2. Fetch data directly from the database
+  const assets = await db.asset.findMany({
+    orderBy: {
+      createdAt: "desc", // Show newest files first
+    },
+  });
+
   return (
     <div className="space-y-6">
-      {/* Header */}
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Overview</h1>
@@ -19,19 +26,19 @@ export default function DashboardPage() {
         </Button>
       </div>
 
-      {/* Asset Grid */}
-      <div
-        className="grid gap-4"
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
-          gap: "1.5rem",
-        }}
-      >
-        {MOCK_ASSETS.map((asset) => (
+      {/* 3. Render Real Assets */}
+      <div className="grid grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-4">
+        {assets.map((asset) => (
           <AssetCard key={asset.id} asset={asset} />
         ))}
       </div>
+
+      {/* Empty State Check */}
+      {assets.length === 0 && (
+        <div className="text-center py-20 text-muted-foreground">
+          No assets found. Upload one to get started.
+        </div>
+      )}
     </div>
   );
 }
