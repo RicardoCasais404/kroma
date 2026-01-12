@@ -2,6 +2,7 @@ import { UploadButton } from "@/components/dashboard/UploadButton";
 import { AssetCard } from "@/components/dashboard/AssetCard";
 import { db } from "@/lib/db"; // Import our database connection
 
+export const dynamic = "force-dynamic";
 // 1. Make the component async so we can fetch data
 export default async function DashboardPage() {
   // 2. Fetch data directly from the database
