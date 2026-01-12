@@ -1,5 +1,4 @@
-import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { UploadButton } from "@/components/dashboard/UploadButton";
 import { AssetCard } from "@/components/dashboard/AssetCard";
 import { db } from "@/lib/db"; // Import our database connection
 
@@ -21,9 +20,7 @@ export default async function DashboardPage() {
             Welcome back to your workspace.
           </p>
         </div>
-        <Button>
-          <Plus className="mr-2 h-4 w-4" /> New Upload
-        </Button>
+        <UploadButton />
       </div>
 
       {/* 3. Render Real Assets */}
