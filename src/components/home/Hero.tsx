@@ -7,13 +7,16 @@ import { ArrowRight, Sparkles } from "lucide-react";
 
 export function Hero() {
   return (
-    <section className="relative flex flex-col items-center justify-center pt-20 pb-32 overflow-hidden">
-      {/* Background Gradient Blob */}
-      <div className="absolute top-0 -z-10 h-full w-full bg-background">
-        <div className="absolute bottom-auto left-auto right-0 top-0 h-125 w-125 -translate-x-[30%] translate-y-[20%] rounded-full bg-primary/30 opacity-50 blur-[80px]" />
-      </div>
+    // Removed 'bg-background' so we can see what's behind/inside
+    <section className="relative flex min-h-[calc(100vh-3.5rem)] flex-col items-center justify-center overflow-hidden">
+      {/* GRADIENT BLOB */}
+      {/* We use standard colors (purple-500) to ensure it pops */}
+      <div className="absolute right-0 top-0 -z-10 h-125 w-125 -translate-y-[20%] translate-x-[20%] rounded-full bg-purple-500 blur-[120px] opacity-20 pointer-events-none" />
 
-      <div className="container px-4 md:px-6 flex flex-col items-center text-center">
+      {/* SECOND BLOB (Bottom Left) for balance */}
+      <div className="absolute left-0 bottom-0 -z-10 h-100 w-100 translate-y-[20%] -translate-x-[20%] rounded-full bg-indigo-500 blur-[120px] opacity-20 pointer-events-none" />
+
+      <div className="container px-4 md:px-6 flex flex-col items-center text-center z-10">
         {/* Animated Badge */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -58,8 +61,8 @@ export function Hero() {
             Start Free Trial <Sparkles className="ml-2 h-4 w-4" />
           </Button>
           <Button size="lg" variant="outline" className="h-12 px-8" asChild>
-            <Link href="/demo">
-              View Demo <ArrowRight className="ml-2 h-4 w-4" />
+            <Link href="/dashboard">
+              View Dashboard <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           </Button>
         </motion.div>
